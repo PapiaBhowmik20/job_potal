@@ -2,6 +2,7 @@
 import express, { application } from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import companyRoutes from "./routes/companyRoutes.js";
@@ -13,9 +14,12 @@ connectDB();
 const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cors({
+    origin: '*'
+}));
 
 app.get('/',(req, res) => {
-    res.send("Hello");
+    res.send("Hii Their");
 })
 app.use("/api/auth", authRoutes);
 app.use("/api/company", companyRoutes);
