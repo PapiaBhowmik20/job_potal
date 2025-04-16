@@ -15,3 +15,5 @@ const JobFilterSchema = new mongoose.Schema({
 )
 
 export default mongoose.model("Job_filter", JobFilterSchema);
+
+ 

@@ -4,6 +4,7 @@ import Job from "../models/jobModel.js";
 import Application from "../models/applicationModel.js";
 import User from "../models/userModel.js";
 import JobSeekerDetails from "../models/jobSeekerModel.js";
+import Job_filter from "../models/JobFilterModel.js";
 
 export const updateCompany = async (req, res) => {
   try{
@@ -113,4 +114,26 @@ export const getJobApplicants = async (req, res) => {
     console.error("Get Job Applicants Error:", error);
     return res.status(500).json({ message: "Server error. Please try again later." });
   }
+};
+
+
+// controllers/jobFilterController.js
+
+
+
+export const getAllJobsFilter = async (req, res) => {
+    try {
+        const jobs = await Job_filter.find(); // Fetch all, newest first
+        res.status(200).json({
+            success: true,
+            jobs
+        });
+    } catch (error) {
+        console.error("Error fetching jobs:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch jobs",
+            error: error.message
+        });
+    }
 };
