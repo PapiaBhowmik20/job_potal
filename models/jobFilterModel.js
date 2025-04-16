@@ -1,3 +1,4 @@
+//jobFilterModel.js
 import mongoose from "mongoose";
 
 const JobFilterSchema = new mongoose.Schema({

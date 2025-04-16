@@ -64,7 +64,7 @@ export const signin = async (req, res) => {
         //     expiresIn: "7d", 
         // });
         const token = generateToken(user._id, user.user_type);
-        console.log(token);
+        // console.log(token);
       res.status(200).json({
         message: "Login successful!",
         token,

@@ -1,3 +1,4 @@
+//jobSeekerModel.js
 import mongoose from "mongoose";
 
 const JobSeekerSchema = new mongoose.Schema(
@@ -65,5 +66,4 @@ const JobSeekerSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("JobSeekerDetails", JobSeekerSchema);
-
  

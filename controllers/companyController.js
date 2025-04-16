@@ -42,6 +42,49 @@ export const updateCompany = async (req, res) => {
 }
 
 
+
+export const getCompanyDetails = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized: No token provided" });
+    }
+
+    const decode = verifyToken(token);
+    if (!decode) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    if (decode.user_type !== 2) {
+      return res.status(403).json({ message: "Forbidden: Only companies can access this route" });
+    }
+
+    const company = await Company.findOne({ company_id: decode.id }).populate("company_id");
+
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
+    res.status(200).json({
+      name: company.company_id?.name,
+      email: company.email || company.company_id?.email,
+      phone: company.phone,
+      location: company.location,
+      website: company.website,
+      industry: company.industry,
+      description: company.description,
+      established_year: company.established_year,
+      status: company.status
+    });
+
+  } catch (error) {
+    console.error("Error fetching company details:", error);
+    res.status(500).json({ message: "Server Error. Please try again later." });
+  }
+};
+
+
+
 export const getCompanyJobs = async (req, res) => {
   try {
     // 1. Extract token from headers
