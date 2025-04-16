@@ -122,18 +122,19 @@ export const getJobApplicants = async (req, res) => {
 
 
 export const getAllJobsFilter = async (req, res) => {
-    try {
-        const jobs = await Job_filter.find(); // Fetch all, newest first
-        res.status(200).json({
-            success: true,
-            jobs
-        });
-    } catch (error) {
-        console.error("Error fetching jobs:", error);
-        res.status(500).json({
-            success: false,
-            message: "Failed to fetch jobs",
-            error: error.message
-        });
-    }
+  try {
+      const jobs = await Job_filter.find().sort({ createdAt: -1 }); // newest first
+      res.status(200).json({
+          success: true,
+          jobs
+      });
+  } catch (error) {
+      console.error("Error fetching jobs:", error);
+      res.status(500).json({
+          success: false,
+          message: "Failed to fetch jobs",
+          error: error.message
+      });
+  }
 };
+ 
