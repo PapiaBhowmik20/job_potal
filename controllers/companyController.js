@@ -2,7 +2,8 @@ import { verifyToken } from "../helper/authHelper.js";
 import Company from "../models/companyModel.js";
 import Job from "../models/jobModel.js";
 import Application from "../models/applicationModel.js";
-// import Job_filter from "../models/JobFilterModel.js";
+import jobFilterModel from "../models/jobFilterModel.js";
+
 
 export const updateCompany = async (req, res) => {
   try{
@@ -162,17 +163,17 @@ export const getJobApplicants = async (req, res) => {
 
 
  
-// export const getAllJobsFilter = async (req, res) => {
-//   try {
-//       const jobs = await Job_filter.find(); // newest first
-//       res.status(200).json({
-//           success: true,
-//           jobs
-//       });
-//   } catch (error) {
-//     console.error("Get Job Applicants Error:", error);
-//     return res.status(500).json({ message: "Server error. Please try again later." });
+export const getAllJobsFilter = async (req, res) => {
+  try {
+      const jobs = await jobFilterModel.find(); // newest first
+      res.status(200).json({
+          success: true,
+          jobs
+      });
+  } catch (error) {
+    console.error("Get Job Applicants Error:", error);
+    return res.status(500).json({ message: "Server error. Please try again later." });
 
-//   }
-// };
+  }
+};
  
