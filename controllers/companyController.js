@@ -2,7 +2,7 @@ import { verifyToken } from "../helper/authHelper.js";
 import Company from "../models/companyModel.js";
 import Job from "../models/jobModel.js";
 import Application from "../models/applicationModel.js";
-import Job_filter from "../models/JobFilterModel.js";
+// import Job_filter from "../models/JobFilterModel.js";
 
 export const updateCompany = async (req, res) => {
   try{
