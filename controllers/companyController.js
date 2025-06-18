@@ -123,29 +123,32 @@ export const getJobApplicants = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized: Token missing" });
     }
 
+    // 2. Decode token and verify company user
     const decoded = verifyToken(token);
     if (!decoded || decoded.user_type !== 2) {
       return res.status(403).json({ message: "Forbidden: Only companies can view applicants" });
     }
 
+    // 3. Get jobId from URL parameters
     const { jobId } = req.params;
     if (!jobId) {
       return res.status(400).json({ message: "Job ID is required" });
     }
 
-    // 2. Check if this job belongs to the company
+    // 4. Confirm the job belongs to this company
     const job = await Job.findOne({ _id: jobId, companyId: decoded.id });
     if (!job) {
       return res.status(404).json({ message: "Job not found or access denied" });
     }
 
-    // 3. Find all applications for this job and populate job seeker info
+    // 5. Fetch applications and populate job seeker details and user info
     const applications = await Application.find({ jobId })
+      .where("jobSeekerId").ne(null) // filter out nulls
       .populate({
         path: "jobSeekerId",
         populate: {
           path: "jobseeker_id",
-          model: "User", // Get user-level info
+          model: "User",
           select: "name email phoneno"
         }
       });
@@ -158,7 +161,7 @@ export const getJobApplicants = async (req, res) => {
   }
 };
 
-
+ 
 // controllers/jobFilterController.js
 
 
